@@ -91,5 +91,5 @@ handlers.notFound = function noValidEndPointFound(data, callback) {
 
 
 router = {
-    'hi': handlers.greet
+    'hello': handlers.greet
 };

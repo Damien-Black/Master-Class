@@ -90,6 +90,7 @@ handlers.notFound = function noValidEndPointFound(data, callback) {
 };
 
 
+// Define router
 router = {
     'hello': handlers.greet
 };

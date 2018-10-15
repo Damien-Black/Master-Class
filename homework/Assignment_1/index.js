@@ -13,27 +13,27 @@ const portForListening = 3000
 
 // Setup server
 server = http.createServer(function (req, resp) {
-    processRequest(req, resp);
+    procReq(req, resp);
 })
 
 server.listen(portForListening, function(){
     console.log('Server listening on ', portForListening)
 });
 
-function processRequest(req, resp) {
+procReq = function processRequest(req, resp) {
     // process URL
     parsedUrl = url.parse(req.url, true);
     path = parsedUrl.pathname;
     trimmedPath = path.replace(/^\/+|\/+$/g, '');
 
     // Resolve request metadata
-    var queryStringObj = parsedUrl.query;
-    var headers = req.headers;
-    var method = req.method;
+    const queryStringObj = parsedUrl.query;
+    const headers = req.headers;
+    const method = req.method;
 
     // Resolve payload
-    var decoder = new StringDecoder('utf-8');
-    var buffer = '';
+    const decoder = new StringDecoder('utf-8');
+    let buffer = '';
 
     req.on('data', function(data){
         buffer += decoder.write(data);
@@ -45,7 +45,7 @@ function processRequest(req, resp) {
         buffer += decoder.end();
 
         // Choose handler, default to not found
-        var chosenHandler = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : handlers.notFound;
+        const chosenHandler = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : handlers.notFound;
 
         data = {
             'trimmedPath': trimmedPath,
@@ -63,7 +63,7 @@ function processRequest(req, resp) {
             payload = typeof(payload) == 'object' ? payload : {};
 
             // Convert payload to string
-            var payloadString = JSON.stringify(payload);
+            const payloadString = JSON.stringify(payload);
 
             // Set content type to JSON
             resp.setHeader('Content-Type', 'application/json');
